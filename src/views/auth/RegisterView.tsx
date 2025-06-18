@@ -5,7 +5,7 @@ import type { UserRegistrationForm } from "@/types/index";
 // Importamos un componente reutilizable para mostrar errores de validación
 import ErrorMessage from "@/components/ErrorMessage";
 // importamos link para poder navegar a otra página
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // importamos el hook de react query para hacer peticiones a la API y modificar datos del servidor
 import { useMutation } from "@tanstack/react-query";
 // importamos la funcion que crear una cuenta
@@ -31,6 +31,8 @@ export default function RegisterView() {
     formState: { errors }, // Objeto que contiene los errores de validación
   } = useForm<UserRegistrationForm>({ defaultValues: initialValues });
 
+  const navigate = useNavigate();
+
   // creamos una variable de tipo useMutation que utilizaremos para hacer peticiones a la API
   // le aplicamos destructuring y asi podemos usar directamente mutate sin tener que usar mutation.mutate
   const { mutate } = useMutation({
@@ -46,6 +48,7 @@ export default function RegisterView() {
       toast.success(data);
       // resetamos el formulario
       reset();
+      navigate("/auth/login");
     },
   });
 

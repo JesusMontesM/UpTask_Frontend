@@ -1,6 +1,6 @@
 // Importamos el componente Link desde react-router-dom
 // Esto se usa para navegar entre rutas sin recargar la página
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // importamos las dependencias para el componente de poner el token de 6 digitos
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 // importamos useState para manejar el estado del componente
@@ -18,6 +18,8 @@ export default function ConfirmAccountView() {
   // creamos una variable de estado para manejar el token de 6 digitos
   const [token, setToken] = useState<ConfirmToken["token"]>("");
 
+  const navigate = useNavigate();
+
   // creamos una variable de tipo useMutation que utilizaremos para hacer peticiones a la API
   // le aplicamos destructuring y asi podemos usar directamente mutate sin tener que usar mutation.mutate
   const { mutate } = useMutation({
@@ -31,6 +33,7 @@ export default function ConfirmAccountView() {
     onSuccess: (data) => {
       // si la función se ejecuta sin errores, mostramos un mensaje de éxito
       toast.success(data);
+      navigate("/auth/login");
     },
   });
 
